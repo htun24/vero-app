@@ -65,4 +65,25 @@ function sell(){modal("List a product",`<p class="sub">Your sample listing appea
 function chat(id){let p=products.find(x=>x.id===id);modal("Chat with "+p.seller,`<p><b>${txt(p.name)}</b></p><div class="bubble">Demo chat only. Messages are not sent to a real seller yet.</div><div id="msgs"></div><form id="msgForm" class="searchrow"><input id="msg" class="searchbox" placeholder="Write a message..." required><button class="btn">Send</button></form>`);$("msgForm").onsubmit=e=>{e.preventDefault();let b=document.createElement("div");b.className="bubble me";b.textContent=$("msg").value;$("msgs").appendChild(b);$("msg").value=""}}
 function order(id){let p=products.find(x=>x.id===id);modal("Confirm demo order",`<p><b>${txt(p.name)}</b></p><p class="price">${money(p.price)}</p><p class="sub">Seller: ${txt(p.seller)}</p><div class="notice">No real payment or shipping is connected in this prototype.</div><button class="btn" id="confirm">Confirm demo order</button> <button class="btn alt" id="cancel">Cancel</button>`);$("cancel").onclick=close;$("confirm").onclick=()=>{orders.push({name:p.name,price:p.price,region:region});modal("Order placed",`<p>✓ Your demo order has been recorded in this page session.</p><button class="btn" id="done">Close</button>`);$("done").onclick=close}}
 $("region").onchange=e=>{region=e.target.value;activeCat="all";$("search").value="";renderRegion()};$("search").oninput=renderProducts;$("searchBtn").onclick=renderProducts;$("sellHero").onclick=sell;$("sellTop").onclick=sell;$("navSell").onclick=sell;$("navHome").onclick=()=>window.scrollTo({top:0,behavior:"smooth"});$("navMarket").onclick=()=>{$("search").focus();window.scrollTo({top:250,behavior:"smooth"})};$("navOrders").onclick=()=>modal("Your orders",orders.length?orders.map(o=>`<div class="bubble"><b>${txt(o.name)}</b><br>${money(o.price)} · Demo order</div>`).join(""):"No demo orders in this page session yet.");$("navProfile").onclick=()=>modal("Your VERO profile","<p>Account sign-in is not connected yet. This is a front-end prototype.</p>");$("closeModal").onclick=close;$("backdrop").onclick=e=>{if(e.target===$("backdrop"))close()};renderRegion();
-</script></body></html>
+</script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL = "https://lqfcndxngyffagqemabg.supabase.co/rest/v1/";
+
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_u4k1k_u75LUpsqEDiAX6Ow_B3ZTKfaI";
+
+
+
+const veroSupabase = window.supabase.createClient(
+
+  SUPABASE_URL,
+
+  SUPABASE_PUBLISHABLE_KEY
+
+);
+
+</script>
+
+
+</body></html>
